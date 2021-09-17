@@ -1,17 +1,18 @@
 import { Express, Request, Response } from "express";
+import { createUserSessionHandler } from "./controller/session.controller";
 import { createUserHandler } from "./controller/user.controller";
 import validateRequest from './middleware/validateRequest'
-import { createUserSchema } from './schema/user.schema';
+import { createUserSchema, createUserSessionSchema } from './schema/user.schema';
 
-export default function(app: Express) {
+export default function (app: Express) {
+  // health check
   app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
-  app.post('/api/users', validateRequest(createUserSchema), createUserHandler);
 
   // Register new user
-  // POST /api/user
+  app.post('/api/users', validateRequest(createUserSchema), createUserHandler);
 
   // Login
-  // POST /api/sessions
+  app.post('/api/sessions', validateRequest(createUserSessionSchema), createUserSessionHandler)
 
 
   // GET the user's sessions

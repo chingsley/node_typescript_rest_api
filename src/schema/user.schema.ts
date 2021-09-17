@@ -1,6 +1,6 @@
 import { object, string, ref } from "yup";
 const PASSWORD = {
-  CONDITION:  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+  CONDITION: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
   MSG: "passord must be a mininum of 8 characters long, must contain at least one lowercase, one uppercase, a number and a special character"
 };
 
@@ -12,3 +12,10 @@ export const createUserSchema = object({
     email: string().email("Must be a valid email").required("Email is required")
   }),
 });
+
+export const createUserSessionSchema = object({
+  body: object({
+    password: string().required("Password is required"),
+    email: string().email("Must be a valid email").required("Email is required")
+  })
+})
